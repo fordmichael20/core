@@ -1,3 +1,3 @@
-#Markdown Doc
+# Heading
 
-##Testing features
+Start a Markdown File
