@@ -1,16 +1,24 @@
 from datetime import datetime
 import calendar
+import inspect
 
 def todays_date():
+    print("running function " + inspect.stack()[0][0].f_code.co_name)
+    
     return_date = datetime.today().date()
     return return_date
 
 def get_month_end(as_of_date=None, return_type="prior"):
+    print("running function " + inspect.stack()[0][0].f_code.co_name)
+    
     if as_of_date is None:
         eff_date = todays_date()
     else:
-        eff_date = as_of_date
-    
+        if type(as_of_date) == str:
+            eff_date = datetime.strptime(as_of_date, "%Y-%m-%d").date()
+        else:
+            eff_date = as_of_date
+            
     mn = eff_date.month
     yr = eff_date.year
     
@@ -30,11 +38,16 @@ def get_month_end(as_of_date=None, return_type="prior"):
 
     return dt
 
+
 def get_quarter_end(as_of_date=None, return_type="prior"):
+    print("running function " + inspect.stack()[0][0].f_code.co_name)
     if as_of_date is None:
         eff_date = todays_date()
     else:
-        eff_date = as_of_date
+        if type(as_of_date) == str:
+            eff_date = datetime.strptime(as_of_date, "%Y-%m-%d").date()
+        else:
+            eff_date = as_of_date
         
     mn = eff_date.month
     yr = eff_date.year
@@ -77,6 +90,8 @@ def get_quarter_end(as_of_date=None, return_type="prior"):
     dt = datetime(year=yr_qe, month = mn_qe, day = dt_qe)
     
     return dt
+
+
     
         
 
