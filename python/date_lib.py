@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import calendar
 import inspect
 
@@ -39,7 +39,7 @@ def get_month_end(as_of_date=None, return_type="prior"):
     return dt
 
 
-def get_quarter_end(as_of_date=None, return_type="prior"):
+def get_quarter_end(as_of_date=None, return_type="prior", exclude_weekends=False):
     print("running function " + inspect.stack()[0][0].f_code.co_name)
     if as_of_date is None:
         eff_date = todays_date()
@@ -69,7 +69,7 @@ def get_quarter_end(as_of_date=None, return_type="prior"):
             mn_qe = 9
             dt_qe = 30
             yr_qe = yr
-    elif return_type =="current":
+    elif return_type == "current":
         if mn in [1, 2, 3]:
             mn_qe = 3
             dt_qe = 31
@@ -89,7 +89,22 @@ def get_quarter_end(as_of_date=None, return_type="prior"):
     
     dt = datetime(year=yr_qe, month = mn_qe, day = dt_qe)
     
+    if exclude_weekends == True:
+        dt = latest_weekday(dt)
+    
     return dt
+
+def latest_weekday(as_of_date):
+    dow = datetime.weekday(as_of_date)
+    if dow == 6:
+        return_date = as_of_date - timedelta(days=2)
+    elif dow == 5:
+        return_date = as_of_date - timedelta(days=1)
+    else:
+        return_date = as_of_date
+    
+    return(return_date)
+
 
 
     
