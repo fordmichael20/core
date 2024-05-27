@@ -84,7 +84,7 @@ def get_quarter_end(as_of_date=None, return_type="prior", exclude_weekends=False
             yr_qe = yr
         else:
             mn_qe = 12
-            mn_qe = 31
+            dt_qe = 31
             yr_qe = yr
     
     dt = datetime(year=yr_qe, month = mn_qe, day = dt_qe)
@@ -95,6 +95,7 @@ def get_quarter_end(as_of_date=None, return_type="prior", exclude_weekends=False
     return dt
 
 def latest_weekday(as_of_date):
+    print("running function " + inspect.stack()[0][0].f_code.co_name)
     dow = datetime.weekday(as_of_date)
     if dow == 6:
         return_date = as_of_date - timedelta(days=2)
