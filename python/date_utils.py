@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import calendar
 import inspect
+import pandas as pd
 
 def todays_date():
     print("running function " + inspect.stack()[0][0].f_code.co_name)
@@ -8,10 +9,11 @@ def todays_date():
     return_date = datetime.today().date()
     return return_date
 
-def get_month_end(as_of_date=None, return_type="prior"):
+def get_month_end(as_of_date : str = None, return_type : str = "prior", exclude_weekends : bool = False):
     print("running function " + inspect.stack()[0][0].f_code.co_name)
     
     if as_of_date is None:
+        print("No default supplied, running month end for today")
         eff_date = todays_date()
     else:
         if type(as_of_date) == str:
@@ -36,10 +38,14 @@ def get_month_end(as_of_date=None, return_type="prior"):
     dt_me = calendar.monthrange(yr_me, mn_me)[1]
     dt = datetime(year=yr_me, month = mn_me, day = dt_me)
 
+    if exclude_weekends == True:
+        dt = latest_weekday(dt)
+    
+
     return dt
 
 
-def get_quarter_end(as_of_date=None, return_type="prior", exclude_weekends=False):
+def get_quarter_end(as_of_date : str = None, return_type : str = "prior", exclude_weekends : bool = False):
     print("running function " + inspect.stack()[0][0].f_code.co_name)
     if as_of_date is None:
         eff_date = todays_date()
@@ -94,7 +100,7 @@ def get_quarter_end(as_of_date=None, return_type="prior", exclude_weekends=False
     
     return dt
 
-def latest_weekday(as_of_date):
+def latest_weekday(as_of_date : str):
     print("running function " + inspect.stack()[0][0].f_code.co_name)
     dow = datetime.weekday(as_of_date)
     if dow == 6:
@@ -105,6 +111,15 @@ def latest_weekday(as_of_date):
         return_date = as_of_date
     
     return(return_date)
+
+def get_dates_between(earlier_date : str, later_date : str, month_ends_only : bool =False, weekdays_only : bool = False):
+    print("running function " + inspect.stack()[0][0].f_code.co_name)
+
+    date_list = pd.date_range(earlier_date, later_date, freq="d")
+    if month_ends_only == True:
+        'fart'
+    return 'barf'        
+
 
 
 
